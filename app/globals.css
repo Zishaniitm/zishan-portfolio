@@ -1,26 +1,219 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #161616;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --text-primary: #f5f5f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent-blue: #3b82f6;
+  --accent-blue-bright: #60a5fa;
+  --accent-purple: #8b5cf6;
+  --accent-purple-bright: #a78bfa;
+  --glow-blue: rgba(59, 130, 246, 0.15);
+  --glow-blue-strong: rgba(59, 130, 246, 0.3);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+/* ── Global grid background on entire page ── */
+body {
+  background-color: #0a0a0a;
+  color: #f5f5f5;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+
+  /* Grid lines across the ENTIRE website */
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-attachment: fixed;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+::selection { background-color: rgba(59,130,246,0.3); color: #f5f5f5; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+/* ── Glassmorphism card ── */
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.glass-card:hover {
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 0 30px rgba(59,130,246,0.12);
+  transform: translateY(-3px);
+}
+
+/* ── Gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glow button ── */
+.glow-btn { transition: box-shadow 0.3s ease, transform 0.2s ease; }
+.glow-btn:hover { box-shadow: 0 0 28px rgba(59,130,246,0.4); transform: translateY(-2px); }
+
+/* ── Animated blobs ── */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0.12;
+  animation: float 10s ease-in-out infinite;
+  pointer-events: none; z-index: 0;
+}
+.blob-blue { background: radial-gradient(circle, #3b82f6, transparent 70%); animation-delay: 0s; }
+.blob-purple { background: radial-gradient(circle, #8b5cf6, transparent 70%); animation-delay: -5s; }
+
+@keyframes float {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(30px,-20px) scale(1.05); }
+  66% { transform: translate(-20px,20px) scale(0.95); }
+}
+
+/* ── Muted text hover — makes grey text interactive ── */
+.hoverable {
+  color: #52525b;
+  transition: color 0.2s ease;
+  cursor: default;
+}
+.hoverable:hover { color: #a1a1aa; }
+
+/* ── Skill badge ── */
+.skill-badge {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.03);
+  color: #71717a;
+  transition: all 0.25s ease;
+  cursor: default;
+}
+.skill-badge:hover {
+  border-color: rgba(59,130,246,0.4);
+  color: #60a5fa;
+  background: rgba(59,130,246,0.08);
+  transform: translateY(-2px);
+}
+
+/* ── Section spacing ── */
+.section { padding: 100px 0; }
+@media (max-width: 768px) { .section { padding: 60px 0; } }
+
+/* ── Noise overlay ── */
+.noise-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat; background-size: 128px 128px;
+}
+
+/* ── Link hover glow ── */
+a { transition: color 0.2s ease, opacity 0.2s ease; }
+
+/* ── Tag/pill hover ── */
+.tag-pill {
+  transition: all 0.2s ease;
+  cursor: default;
+}
+.tag-pill:hover {
+  border-color: rgba(255,255,255,0.15) !important;
+  color: #a1a1aa !important;
+  transform: translateY(-1px);
+}
+
+/* ── Mobile Responsive Fixes ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+ 
+  /* Hero — stack vertically, center everything */
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 48px !important;
+    padding-top: 100px !important;
+  }
+ 
+  /* Hero photo — smaller on mobile */
+  .hero-photo-wrapper {
+    width: 240px !important;
+    height: 240px !important;
+    margin: 0 auto !important;
+  }
+ 
+  /* Hide floating badges on very small screens */
+  .hero-photo-wrapper > div[style*="bottom: 28px"],
+  .hero-photo-wrapper > div[style*="top: 24px"] {
+    display: none !important;
+  }
+ 
+  /* Center buttons on mobile */
+  .hero-grid > div > div > div[style*="flex-wrap"] {
+    justify-content: center !important;
+  }
+ 
+  /* About grid — single column */
+  .about-grid {
+    grid-template-columns: 1fr !important;
+  }
+ 
+  /* Navbar — hide desktop links */
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav {
+    display: flex !important;
+  }
+ 
+  /* Section padding tighter on mobile */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+ 
+  /* Project cards — full width */
+  .glass-card {
+    border-radius: 12px !important;
+  }
+ 
+  /* Timeline — reduce left indent */
+  .timeline-dot {
+    left: 12px !important;
+  }
+ 
+  /* Footer — stack vertically */
+  footer > div > div:first-child {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
   }
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+ 
+@media (max-width: 480px) {
+  /* Very small phones */
+  .hero-photo-wrapper {
+    width: 200px !important;
+    height: 200px !important;
+  }
+ 
+  /* Reduce section heading size */
+  h2 { font-size: clamp(26px, 7vw, 36px) !important; }
+ 
+  /* Stack contact cards text */
+  .contact-card-inner { flex-direction: column !important; gap: 8px !important; }
 }
