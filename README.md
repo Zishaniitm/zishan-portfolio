@@ -168,8 +168,8 @@ Inspired by:
 
 ### Zishan Ahmad
 
-* GitHub: [https://github.com/Zishaniitm](https://github.com/Zishaniitm)
-* LinkedIn: Add your LinkedIn URL
+* [GitHub](https://github.com/zishaniitm)
+* [LinkedIn](https://www.linkedin.com/in/zishan-ahmad-155b24239/)
 * Portfolio: Coming Soon
 
 ---
