@@ -14,7 +14,6 @@ export default function Hero() {
   const springX = useSpring(mouseX, { stiffness: 60, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 60, damping: 20 });
 
-  // ✅ All useTransform calls at TOP LEVEL — not inside JSX
   const imgInnerX = useTransform(springX, (v) => v * -0.5);
   const imgInnerY = useTransform(springY, (v) => v * -0.5);
 
@@ -98,8 +97,9 @@ export default function Hero() {
                 ))}
               </motion.div>
 
+              {/* ── Tech tag strip — updated to reflect what's actually built ── */}
               <motion.div variants={staggerItem} style={{ display: "flex", flexWrap: "wrap", gap: "7px" }}>
-                {["Python", "Java", "Scikit-learn", "XGBoost", "Spring Boot", "Kafka"].map((tech, i) => (
+                {["Python", "Java", "XGBoost", "SHAP", "Spring Boot", "Docker"].map((tech, i) => (
                   <motion.span key={tech} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 + i * 0.07 }}
                     whileHover={{ y: -2 }}
                     style={{ padding: "5px 13px", fontSize: "12px", fontWeight: 500, borderRadius: "999px", border: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)", color: "#3f3f46", cursor: "default" }}
@@ -135,7 +135,7 @@ export default function Hero() {
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "35%", background: "linear-gradient(to top, rgba(10,10,10,0.4), transparent)", zIndex: 3 }} />
             </div>
 
-           {/* Badge — IIT Madras */}
+            {/* Badge — IIT Madras (unchanged) */}
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.0, duration: 0.6 }}
               whileHover={{ scale: 1.05, y: -2 }}
               style={{ position: "absolute", bottom: "28px", left: "-48px", zIndex: 20, display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", borderRadius: "14px", background: "rgba(8,8,12,0.92)", border: "1px solid rgba(59,130,246,0.25)", backdropFilter: "blur(16px)", boxShadow: "0 8px 32px rgba(0,0,0,0.5)", cursor: "default" }}
@@ -147,15 +147,15 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Badge — 84% Accuracy */}
+            {/* Badge — CreditSense AI (updated from "84% Accuracy") */}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.2, duration: 0.6 }}
               whileHover={{ scale: 1.05, y: -2 }}
               style={{ position: "absolute", top: "24px", right: "-44px", zIndex: 20, display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", borderRadius: "14px", background: "rgba(8,8,12,0.92)", border: "1px solid rgba(139,92,246,0.25)", backdropFilter: "blur(16px)", boxShadow: "0 8px 32px rgba(0,0,0,0.5)", cursor: "default" }}
             >
-              <span style={{ fontSize: "22px" }}>🧠</span>
+              <span style={{ fontSize: "22px" }}>🛡️</span>
               <div>
-                <div style={{ fontSize: "12px", fontWeight: 700, color: "#f5f5f5", lineHeight: 1.3 }}>84% Accuracy</div>
-                <div style={{ fontSize: "10px", color: "#a78bfa", lineHeight: 1.3 }}>Best ML Model</div>
+                <div style={{ fontSize: "12px", fontWeight: 700, color: "#f5f5f5", lineHeight: 1.3 }}>120/120 Tests</div>
+                <div style={{ fontSize: "10px", color: "#a78bfa", lineHeight: 1.3 }}>CreditSense AI</div>
               </div>
             </motion.div>
           </motion.div>
